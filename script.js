@@ -30,6 +30,6 @@ createCells()
 
 for(let cell of container.childNodes){
     cell.addEventListener('mouseover', (e) => {
-        e.target.style.background = 'blue'
+        e.target.classList.add('pixelated-effect')
     })
 }
