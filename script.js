@@ -18,8 +18,8 @@ const addEventToCell = (pad) => {
 }
 
 const clearSketchPad = (pad) => {
-    for(let cell of pad) {
-        pad.removeChild(cell)
+    while(pad.hasChildNodes()) {
+        pad.removeChild(pad.firstChild)
     }
 } 
 
@@ -55,7 +55,7 @@ button.addEventListener('click', (e) => {
         }
         else{
             clearSketchPad(container)
-            // createCells(gridSize)
+            createCells(container, gridSize)
         }
     }
     else {
