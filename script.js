@@ -1,7 +1,5 @@
 let container = document.querySelector("#container")
-
-const GRIDSIZE = 16
-let totalCells = GRIDSIZE * GRIDSIZE
+let button = document.querySelector("button")
 
 const goToNewLine = () => {
 
@@ -11,25 +9,58 @@ const goToNewLine = () => {
 
 }
 
-const createCells = () => {
-    for( let i = 0; i < totalCells; i++ ) {
+const addEventToCell = (pad) => {
+    for(let cell of pad.childNodes){
+        cell.addEventListener('mouseover', (e) => {
+            e.target.classList.add('pixelated-effect')
+    })
+}
+}
+
+const clearSketchPad = (pad) => {
+    for(let cell of pad) {
+        pad.removeChild(cell)
+    }
+} 
+
+const createCells = (pad, gridSize = 16) => {
+    for( let i = 0; i < gridSize * gridSize; i++ ) {
 
         let cell = document.createElement("div")
 
         cell.classList.add("styled")
 
-        container.appendChild(cell)
+        pad.appendChild(cell)
 
-        if( (i + 1) % GRIDSIZE === 0) {
+        if( (i + 1) % gridSize === 0) {
             goToNewLine()
         }
     }
+
+    addEventToCell(pad)
 }
 
-createCells()
+createCells(container)
 
-for(let cell of container.childNodes){
-    cell.addEventListener('mouseover', (e) => {
-        e.target.classList.add('pixelated-effect')
-    })
-}
+
+
+button.addEventListener('click', (e) => {
+    
+    e.preventDefault()
+    let gridSize = prompt("Specify the grid size")
+
+    if(gridSize != null) {
+        if (parseInt(gridSize) > 100) {
+            alert("Grid size should be an integer less or equal to 100")
+        }
+        else{
+            clearSketchPad(container)
+            // createCells(gridSize)
+        }
+    }
+    else {
+        return
+    }
+
+
+})
